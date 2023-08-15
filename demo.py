@@ -1,24 +1,23 @@
+#importing the required library
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
-import os
-from langchain.document_loaders import TextLoader
 from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 import json
-from langchain.chains.summarize import load_summarize_chain
-
 import os
+
+#add your openai api key here
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
+#name of your PDFs here
 path = ["attention-is-all-you-need.pdf", "qlora.pdf"]
 
-
+#Uploading these PDFs into a vector db
 print('indexing documents...')
 
 for i in path:
@@ -30,10 +29,12 @@ for i in path:
 db = Chroma.from_documents(documents = documents, embedding = OpenAIEmbeddings())
 print('indexing done...') 
 
+#Call your LLM here
 llm = OpenAI(openai_api_key=OPENAI_API_KEY, temperature=0)
 
 query = input('>>>>: Hello, I am your personal bot. How can I help you?')
 
+#This is your prompt. Change it according to your use case
 template = """
             You are a personal assistant. You answer questions related to the context provided to you only. 
             If the user asks about something which is not present in the context provided, please say "I'm sorry,
