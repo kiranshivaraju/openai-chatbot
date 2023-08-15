@@ -1,4 +1,4 @@
-# openai-chatbot
+# Openai-chatbot with memory
 A chat bot powered by OpenAI's gpt-3.5-turbo over your personalised data.
 
 - add your openai api key in line 17
